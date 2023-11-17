@@ -7,7 +7,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 import { OpenAIIcon } from '~/common/components/icons/OpenAIIcon';
-import { closeLayoutDrawerMenu } from '~/common/layout/store-applayout';
+import { closeLayoutDrawer } from '~/common/layout/store-applayout';
 import { useChatStore } from '~/common/state/store-chats';
 import { useUIPreferencesStore } from '~/common/state/store-ui';
 
@@ -26,12 +26,12 @@ export function ChatDrawerItems(props: {
   const [grouping] = React.useState<ListGrouping>('off');
 
   // external state
-  const { conversationIDs, topNewConversationId, maxChatMessages, setActiveConversationId, createConversation, deleteConversation } = useChatStore(state => ({
+  const { conversationIDs, topNewConversationId, maxChatMessages, setActiveConversationId, createConversationOrSwitch, deleteConversation } = useChatStore(state => ({
     conversationIDs: state.conversations.map(conversation => conversation.id),
     topNewConversationId: state.conversations.length ? state.conversations[0].messages.length === 0 ? state.conversations[0].id : null : null,
     maxChatMessages: state.conversations.reduce((longest, conversation) => Math.max(longest, conversation.messages.length), 0),
     setActiveConversationId: state.setActiveConversationId,
-    createConversation: state.createConversation,
+    createConversationOrSwitch: state.createConversationOrSwitch,
     deleteConversation: state.deleteConversation,
   }), shallow);
   const { experimentalLabs, showSymbols } = useUIPreferencesStore(state => ({
@@ -46,18 +46,14 @@ export function ChatDrawerItems(props: {
   const softMaxReached = totalConversations >= 50;
 
   const handleNew = () => {
-    // if the first in the stack is a new conversation, just activate it
-    if (topNewConversationId)
-      setActiveConversationId(topNewConversationId);
-    else
-      createConversation();
-    closeLayoutDrawerMenu();
+    createConversationOrSwitch();
+    closeLayoutDrawer();
   };
 
   const handleConversationActivate = React.useCallback((conversationId: string, closeMenu: boolean) => {
     setActiveConversationId(conversationId);
     if (closeMenu)
-      closeLayoutDrawerMenu();
+      closeLayoutDrawer();
   }, [setActiveConversationId]);
 
   const handleConversationDelete = React.useCallback((conversationId: string) => {
@@ -95,7 +91,10 @@ export function ChatDrawerItems(props: {
 
     <MenuItem disabled={!!topNewConversationId && topNewConversationId === props.conversationId} onClick={handleNew}>
       <ListItemDecorator><AddIcon /></ListItemDecorator>
-      New
+      <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'space-between', gap: 1 }}>
+        New
+        {/*<KeyStroke combo='Ctrl + Alt + N' />*/}
+      </Box>
     </MenuItem>
 
     <ListDivider sx={{ mb: 0 }} />

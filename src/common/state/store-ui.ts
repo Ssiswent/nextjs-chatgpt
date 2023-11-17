@@ -1,88 +1,45 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { DLLMId } from '~/modules/llms/store-llms';
-
-
-// UI State - not persisted
-
-interface UIStateStore {
-
-  settingsOpenTab: number; // 0: closed, 1..N: tab index
-  openSettings: (tab?: number) => void;
-  closeSettings: () => void;
-
-  modelsSetupOpen: boolean;
-  openModelsSetup: () => void;
-  closeModelsSetup: () => void;
-
-  llmOptionsId: DLLMId | null;
-  openLLMOptions: (llmId: DLLMId) => void;
-  closeLLMOptions: () => void;
-
-}
-
-export const useUIStateStore = create<UIStateStore>()(
-  (set) => ({
-
-    settingsOpenTab: 0,
-    openSettings: (tab?: number) => set({ settingsOpenTab: tab || 1 }),
-    closeSettings: () => set({ settingsOpenTab: 0 }),
-
-    modelsSetupOpen: false,
-    openModelsSetup: () => set({ modelsSetupOpen: true }),
-    closeModelsSetup: () => set({ modelsSetupOpen: false }),
-
-    llmOptionsId: null,
-    openLLMOptions: (llmId: DLLMId) => set({ llmOptionsId: llmId }),
-    closeLLMOptions: () => set({ llmOptionsId: null }),
-
-  }),
-);
-
-
 // UI Counters
 
 interface UICountersStore {
-
   actionCounters: Record<string, number>;
   incrementActionCounter: (key: string) => void;
   clearActionCounter: (key: string) => void;
   clearAllActionCounters: () => void;
-
 }
 
 const useUICountersStore = create<UICountersStore>()(
   persist(
     (set) => ({
-
       actionCounters: {},
-      incrementActionCounter: (key: string) => set(state => ({
-        actionCounters: { ...state.actionCounters, [key]: (state.actionCounters[key] || 0) + 1 },
-      })),
-      clearActionCounter: (key: string) => set(state => ({
-        actionCounters: { ...state.actionCounters, [key]: 0 },
-      })),
+      incrementActionCounter: (key: string) =>
+        set((state) => ({
+          actionCounters: { ...state.actionCounters, [key]: (state.actionCounters[key] || 0) + 1 },
+        })),
+      clearActionCounter: (key: string) =>
+        set((state) => ({
+          actionCounters: { ...state.actionCounters, [key]: 0 },
+        })),
       clearAllActionCounters: () => set({ actionCounters: {} }),
-
     }),
     {
       name: 'app-ui-counters',
-    }),
+    },
+  ),
 );
 
-type UiCounterKey = 'export-share' | 'share-chat-link';
+type UiCounterKey = 'export-share' | 'share-chat-link' | 'call-wizard';
 
 export function useUICounter(key: UiCounterKey) {
-  const value = useUICountersStore(state => state.actionCounters[key] || 0);
+  const value = useUICountersStore((state) => state.actionCounters[key] || 0);
   return { value, novel: !value, touch: () => useUICountersStore.getState().incrementActionCounter(key) };
 }
-
 
 // UI Preferences
 
 interface UIPreferencesStore {
-
   preferredLanguage: string;
   setPreferredLanguage: (preferredLanguage: string) => void;
 
@@ -110,6 +67,8 @@ interface UIPreferencesStore {
   zenMode: 'clean' | 'cleaner';
   setZenMode: (zenMode: 'clean' | 'cleaner') => void;
 
+  autoSetChatTitle: boolean;
+  setAutoSetChatTitle: (autoSetChatTitle: boolean) => void;
 }
 
 export const useUIPreferencesStore = create<UIPreferencesStore>()(
@@ -143,6 +102,9 @@ export const useUIPreferencesStore = create<UIPreferencesStore>()(
       zenMode: 'clean',
       setZenMode: (zenMode: 'clean' | 'cleaner') => set({ zenMode }),
 
+      autoSetChatTitle: true,
+      setAutoSetChatTitle: (autoSetChatTitle) => set({ autoSetChatTitle }),
+          
     }),
     {
       name: 'app-ui',

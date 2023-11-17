@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Alert, Box, Button, Typography } from '@mui/joy';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-import { useComposerStore } from '../src/apps/chat/components/composer/store-composer';
+import { setComposerStartupText } from '../src/apps/chat/components/composer/store-composer';
 
 import { AppLayout } from '~/common/layout/AppLayout';
 import { LogoProgress } from '~/common/components/LogoProgress';
@@ -32,8 +32,8 @@ function AppShareTarget() {
 
 
   const queueComposerTextAndLaunchApp = React.useCallback((text: string) => {
-    useComposerStore.getState().setStartupText(text);
-    routerReplace('/').then(() => null);
+    setComposerStartupText(text);
+    void routerReplace('/');
   }, [routerReplace]);
 
 
