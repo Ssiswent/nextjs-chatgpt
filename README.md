@@ -1,8 +1,8 @@
 # BIG-AGI 🧠✨
 
-Welcome to big-AGI 👋, the GPT application for Pro users that combines utility,
-simplicity, and speed. Powered by the latest models from 7 vendors, including
-open-source, `big-AGI` offers best-in-class Voice and Chat with AI Personas,
+Welcome to big-AGI 👋, the GPT application for professionals that need function, form,
+simplicity, and speed. Powered by the latest models from 10 vendors and
+open-source model servers, `big-AGI` offers best-in-class Voice and Chat with AI Personas,
 visualizations, coding, drawing, calling, and quite more -- all in a polished UX.
 
 Pros use big-AGI. 🚀 Developers love big-AGI. 🤖
@@ -11,7 +11,7 @@ Pros use big-AGI. 🚀 Developers love big-AGI. 🤖
 
 Or fork & run on Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fenricoros%2Fbig-agi&env=OPENAI_API_KEY,OPENAI_API_HOST&envDescription=OpenAI%20KEY%20for%20your%20deployment.%20Set%20HOST%20only%20if%20non-default.)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fenricoros%2Fbig-agi&env=OPENAI_API_KEY&envDescription=Backend%20API%20keys%2C%20optional%20and%20may%20be%20overridden%20by%20the%20UI.&envLink=https%3A%2F%2Fgithub.com%2Fenricoros%2Fbig-AGI%2Fblob%2Fmain%2Fdocs%2Fenvironment-variables.md&project-name=big-agi)
 
 ## 👉 [roadmap](https://github.com/users/enricoros/projects/4/views/2)
 
@@ -21,20 +21,43 @@ shows the current developments and future ideas.
 - Got a suggestion? [_Add your roadmap ideas_](https://github.com/enricoros/big-agi/issues/new?&template=roadmap-request.md)
 - Want to contribute? [_Pick up a task!_](https://github.com/users/enricoros/projects/4/views/4) - _easy_ to _pro_
 
-### What's New in 1.5.0 🌟
+### What's New in 1.10.0 · Jan 6, 2024 · The Year of AGI
 
-- **Continued Voice**: Engage with hands-free interaction for a seamless experience
-- **Visualization Tool**: Create data representations with our new visualization capabilities
-- **Ollama Local Models**: Leverage local models support with our comprehensive guide
-- **Text Tools**: Enjoy tools including highlight differences to refine your content
-- **Mermaid Diagramming**: Render complex diagrams with our Mermaid language support
-- **OpenAI 1106 Chat Models**: Experience the cutting-edge capabilities of the latest OpenAI models
-- **SDXL Support**: Enhance your image generation with SDXL support for Prodia
-- **Cloudflare OpenAI API Gateway**: Integrate with Cloudflare for a robust API gateway
-- **Helicone for Anthropic**: Utilize Helicone's tools for Anthropic models
+https://github.com/enricoros/big-AGI/assets/32999/fbb1be49-5c38-49c8-86fa-3705700f6c39
 
-Check out the [big-AGI open roadmap](https://github.com/users/enricoros/projects/4/views/2), or
-the [past releases changelog](docs/changelog.md).
+- **New UI**: for both desktop and mobile, sets the stage for future scale. [#201](https://github.com/enricoros/big-AGI/issues/201)
+- **Conversation Folders**: enhanced conversation organization. [#321](https://github.com/enricoros/big-AGI/issues/321)
+- **[LM Studio](https://lmstudio.ai/)** support and improved token management
+- Resizable panes in split-screen conversations.
+- Large performance optimizations
+- Developer enhancements: new UI framework, updated documentation for proxy settings on browserless/docker
+
+### What's New in 1.9.0 · Dec 28, 2023 · Creative Horizons
+
+- **DALL·E 3 integration** for enhanced image generation. [#212](https://github.com/enricoros/big-AGI/issues/212)
+- **Perfect scrolling mechanics** across devices. [#304](https://github.com/enricoros/big-AGI/issues/304)
+- Persona creation now supports **text input**. [#287](https://github.com/enricoros/big-AGI/pull/287)
+- Openrouter updates for better model management and rate limit handling
+- Image drawing UX improvements
+- Layout fix for Firefox users
+- Developer enhancements: Text2Image subsystem, Optima layout, ScrollToBottom library, Panes library, and Llms subsystem updates.
+
+### What's New in 1.8.0 · Dec 20, 2023
+
+- **Google Gemini Support**: Use the newest Google models. [#275](https://github.com/enricoros/big-agi/issues/275)
+- **Mistral Platform**: Mixtral and future models support. [#273](https://github.com/enricoros/big-agi/issues/273)
+- **Diagram Instructions**. Thanks to @joriskalz! [#280](https://github.com/enricoros/big-agi/pull/280)
+- Ollama Chats: Enhanced chatting experience. [#270](https://github.com/enricoros/big-agi/issues/270)
+- Mac Shortcuts Fix: Improved UX on Mac
+- **Single-Tab Mode**: Data integrity with single window. [#268](https://github.com/enricoros/big-agi/issues/268)
+- **Updated Models**: Latest Ollama (v0.1.17) and OpenRouter models
+- Official Downloads: Easy access to the latest big-AGI on [big-AGI.com](https://big-agi.com)
+- For developers: [troubleshot networking](https://github.com/enricoros/big-AGI/issues/276#issuecomment-1858591483), fixed Vercel deployment, cleaned up the LLMs/Streaming framework
+
+### What's New in... ?
+
+> [To The Moon And Back, Attachment Theory, Surf's Up, Loaded, and more releases...](docs/changelog.md).  
+> Check out the [big-AGI open roadmap](https://github.com/users/enricoros/projects/4/views/2)
 
 ## ✨ Key Features 👊
 
@@ -72,7 +95,8 @@ the [past releases changelog](docs/changelog.md).
 ![React](https://img.shields.io/badge/React-61DAFB?style=&logo=react&logoColor=black)
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=&logo=vercel&logoColor=white)
 
-Clone this repo, install the dependencies, and run the development server:
+Clone this repo, install the dependencies (all locally), and run the development server (which auto-watches the
+files for changes):
 
 ```bash
 git clone https://github.com/enricoros/big-agi.git
@@ -81,15 +105,23 @@ npm install
 npm run dev
 ```
 
-The app will be running on `http://localhost:3000`
+The development app will be running on `http://localhost:3000`. Development builds have the advantage of not requiring
+a build step, but can be slower than production builds. Also, development builds won't have timeout on edge functions.
 
-Integrations:
+## 🌐 Deploy manually
 
-* Local models: Ollama, Oobabooga, LocalAi, etc.
-* [ElevenLabs](https://elevenlabs.io/) Voice Synthesis (bring your own voice too) - Settings > Text To Speech
-* [Helicone](https://www.helicone.ai/) LLM Observability Platform - Models > OpenAI > Advanced > API Host: 'oai.hconeai.com'
-* [Paste.gg](https://paste.gg/) Paste Sharing - Chat Menu > Share via paste.gg
-* [Prodia](https://prodia.com/) Image Generation - Settings > Image Generation > Api Key & Model
+The _production_ build of the application is optimized for performance and is performed by the `npm run build` command,
+after installing the required dependencies.
+
+```bash
+# .. repeat the steps above up to `npm install`, then:
+npm run build
+npm run start --port 3000
+```
+
+The app will be running on the specified port, e.g. `http://localhost:3000`.
+
+Want to deploy with username/password? See the [Authentication](docs/deploy-authentication.md) guide.
 
 ## 🐳 Deploy with Docker
 
@@ -105,7 +137,7 @@ docker run -d -p 3000:3000 big-agi
 Or run the official container:
 
 - manually: `docker run -d -p 3000:3000 ghcr.io/enricoros/big-agi`
-- or, with docker-compose: `docker-compose up`
+- or, with docker-compose: `docker-compose up` or see [the documentation](docs/deploy-docker.md) for a composer file with integrated browsing
 
 ## ☁️ Deploy on Cloudflare Pages
 
@@ -115,9 +147,15 @@ Please refer to the [Cloudflare deployment documentation](docs/deploy-cloudflare
 
 Create your GitHub fork, create a Vercel project over that fork, and deploy it. Or press the button below for convenience.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fenricoros%2Fbig-agi&env=OPENAI_API_KEY,OPENAI_API_HOST&envDescription=OpenAI%20KEY%20for%20your%20deployment.%20Set%20HOST%20only%20if%20non-default.)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fenricoros%2Fbig-agi&env=OPENAI_API_KEY&envDescription=Backend%20API%20keys%2C%20optional%20and%20may%20be%20overridden%20by%20the%20UI.&envLink=https%3A%2F%2Fgithub.com%2Fenricoros%2Fbig-AGI%2Fblob%2Fmain%2Fdocs%2Fenvironment-variables.md&project-name=big-agi)
 
+## Integrations:
 
+* Local models: Ollama, Oobabooga, LocalAi, etc.
+* [ElevenLabs](https://elevenlabs.io/) Voice Synthesis (bring your own voice too) - Settings > Text To Speech
+* [Helicone](https://www.helicone.ai/) LLM Observability Platform - Models > OpenAI > Advanced > API Host: 'oai.hconeai.com'
+* [Paste.gg](https://paste.gg/) Paste Sharing - Chat Menu > Share via paste.gg
+* [Prodia](https://prodia.com/) Image Generation - Settings > Image Generation > Api Key & Model
 
 <br/>
 

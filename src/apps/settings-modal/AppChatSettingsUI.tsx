@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { shallow } from 'zustand/shallow';
 
-import { Button, FormControl, Radio, RadioGroup, Switch } from '@mui/joy';
+import { Button, FormControl, Switch } from '@mui/joy';
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import WidthNormalIcon from '@mui/icons-material/WidthNormal';
 import WidthWideIcon from '@mui/icons-material/WidthWide';
 
 import { FormLabelStart } from '~/common/components/forms/FormLabelStart';
+import { FormRadioControl } from '~/common/components/forms/FormRadioControl';
 import { isPwa } from '~/common/util/pwaUtils';
-import { openLayoutModelsSetup } from '~/common/layout/store-applayout';
 import { useIsMobile } from '~/common/components/useMatchMedia';
+import { useOptimaLayout } from '~/common/layout/optima/useOptimaLayout';
 import { useUIPreferencesStore } from '~/common/state/store-ui';
 
 
@@ -17,10 +18,14 @@ import { useUIPreferencesStore } from '~/common/state/store-ui';
 const SHOW_PURPOSE_FINDER = false;
 
 
-const ModelOptionsButton = () =>
-  <Button
+const ModelsSetupButton = () => {
+
+  // external state
+  const { openModelsSetup } = useOptimaLayout();
+
+  return <Button
     // variant='soft' color='success'
-    onClick={openLayoutModelsSetup}
+    onClick={openModelsSetup}
     startDecorator={<BuildCircleIcon />}
     sx={{
       '--Icon-fontSize': 'var(--joy-fontSize-xl2)',
@@ -28,6 +33,7 @@ const ModelOptionsButton = () =>
   >
     Models
   </Button>;
+};
 
 
 export function AppChatSettingsUI() {
@@ -50,13 +56,9 @@ export function AppChatSettingsUI() {
     zenMode: state.zenMode, setZenMode: state.setZenMode,
   }), shallow);
 
-  const handleCenterModeChange = (event: React.ChangeEvent<HTMLInputElement>) => setCenterMode(event.target.value as 'narrow' | 'wide' | 'full' || 'wide');
-
   const handleEnterIsNewlineChange = (event: React.ChangeEvent<HTMLInputElement>) => setEnterIsNewline(!event.target.checked);
 
   const handleDoubleClickToEditChange = (event: React.ChangeEvent<HTMLInputElement>) => setDoubleClickToEdit(event.target.checked);
-
-  const handleZenModeChange = (event: React.ChangeEvent<HTMLInputElement>) => setZenMode(event.target.value as 'clean' | 'cleaner');
 
   const handleRenderMarkdownChange = (event: React.ChangeEvent<HTMLInputElement>) => setRenderMarkdown(event.target.checked);
 
@@ -67,7 +69,7 @@ export function AppChatSettingsUI() {
     <FormControl orientation='horizontal' sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
       <FormLabelStart title='AI Models'
                       description='Setup' />
-      <ModelOptionsButton />
+      <ModelsSetupButton />
     </FormControl>
 
     <FormControl orientation='horizontal' sx={{ justifyContent: 'space-between' }}>
@@ -102,25 +104,27 @@ export function AppChatSettingsUI() {
               slotProps={{ endDecorator: { sx: { minWidth: 26 } } }} />
     </FormControl>}
 
-    <FormControl orientation='horizontal' sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
-      <FormLabelStart title='Appearance'
-                      description={zenMode === 'clean' ? 'Show senders' : 'Minimal UI'} />
-      <RadioGroup orientation='horizontal' value={zenMode} onChange={handleZenModeChange}>
-        {/*<Radio value='clean' label={<Face6Icon sx={{ width: 24, height: 24, mt: -0.25 }} />} />*/}
-        <Radio value='clean' label='Clean' />
-        <Radio value='cleaner' label='Zen' />
-      </RadioGroup>
-    </FormControl>
+    <FormRadioControl
+      title='Appearance'
+      description={zenMode === 'clean' ? 'Show senders' : 'Minimal UI'}
+      options={[
+        { label: 'Clean', value: 'clean' },
+        { label: 'Zen', value: 'cleaner' },
+      ]}
+      value={zenMode} onChange={setZenMode} />
 
-    {!isPwa() && !isMobile && <FormControl orientation='horizontal' sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
-      <FormLabelStart title='Page Size'
-                      description={centerMode === 'full' ? 'Full screen chat' : centerMode === 'narrow' ? 'Narrow chat' : 'Wide'} />
-      <RadioGroup orientation='horizontal' value={centerMode} onChange={handleCenterModeChange}>
-        <Radio value='narrow' label={<WidthNormalIcon sx={{ width: 25, height: 24, mt: -0.25 }} />} />
-        <Radio value='wide' label={<WidthWideIcon sx={{ width: 25, height: 24, mt: -0.25 }} />} />
-        <Radio value='full' label='Full' />
-      </RadioGroup>
-    </FormControl>}
+    {!isPwa() && !isMobile && (
+      <FormRadioControl
+        title='Page Size'
+        description={centerMode === 'full' ? 'Full screen chat' : centerMode === 'narrow' ? 'Narrow chat' : 'Wide'}
+        options={[
+          { value: 'narrow', label: <WidthNormalIcon sx={{ width: 25, height: 24, mt: -0.25 }} /> },
+          { value: 'wide', label: <WidthWideIcon sx={{ width: 25, height: 24, mt: -0.25 }} /> },
+          { value: 'full', label: 'Full' },
+        ]}
+        value={centerMode} onChange={setCenterMode}
+      />
+    )}
 
   </>;
 }

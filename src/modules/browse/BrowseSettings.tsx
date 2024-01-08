@@ -27,16 +27,16 @@ export function BrowseSettings() {
     <FormHelperText sx={{ display: 'block' }}>
       Configure a browsing service to enable loading links and pages. See the <Link
       href='https://github.com/enricoros/big-agi/blob/main/docs/config-browse.md' target='_blank' noLinkStyle>
-      browse functionality guide</Link> for more information.
+      browse configuration guide</Link> for more information.
     </FormHelperText>
 
-    {!isServerConfig && <FormInputKey
-      id='browse-wss' label='WSS Endpoint' noKey
+    <FormInputKey
+      id='browse-wss' label='Puppeteer Endpoint' noKey
       value={wssEndpoint} onChange={setWssEndpoint}
-      rightLabel={!isServerConfig ? 'must be valid' : '✔️ already set in server'}
-      required={!isServerConfig} isError={!isClientValid}
+      rightLabel={!isServerConfig ? 'required' : '✔️ already set in server'}
+      required={!isServerConfig} isError={!isClientValid && !isServerConfig}
       placeholder='wss://...'
-    />}
+    />
 
     <FormControl disabled={!mayWork}>
       <Checkbox variant='outlined' label='Attach URLs' checked={inComposer} onChange={(event) => setEnableComposerAttach(event.target.checked)} />
