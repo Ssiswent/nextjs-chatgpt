@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DragDropContext, Draggable, DropResult } from 'react-beautiful-dnd';
 
-import { List, ListItem, ListItemButton, ListItemContent, ListItemDecorator, MenuList, Sheet, Typography } from '@mui/joy';
+import { List, ListItem, ListItemButton, ListItemContent, ListItemDecorator, Sheet, Typography } from '@mui/joy';
 import FolderIcon from '@mui/icons-material/Folder';
 
 import { DFolder, useFolderStore } from '~/common/state/store-folders';
@@ -13,12 +13,12 @@ import { StrictModeDroppable } from './StrictModeDroppable';
 
 export function ChatFolderList(props: {
   folders: DFolder[];
+  activeFolderId: string | null;
   onFolderSelect: (folderId: string | null) => void;
-  selectedFolderId: string | null;
 }) {
 
   // derived props
-  const { folders, onFolderSelect, selectedFolderId } = props;
+  const { folders, onFolderSelect, activeFolderId } = props;
 
   // handlers
 
@@ -30,7 +30,7 @@ export function ChatFolderList(props: {
 
   return (
     <Sheet variant='soft' sx={{ p: 2 }}>
-      <MenuList
+      <List
         variant='plain'
         sx={(theme) => ({
           '& ul': {
@@ -72,11 +72,11 @@ export function ChatFolderList(props: {
               droppableId='folder'
               renderClone={(provided, snapshot, rubric) => (
                 <FolderListItem
+                  activeFolderId={activeFolderId}
                   folder={folders[rubric.source.index]}
+                  onFolderSelect={onFolderSelect}
                   provided={provided}
                   snapshot={snapshot}
-                  onFolderSelect={onFolderSelect}
-                  selectedFolderId={selectedFolderId}
                 />
               )}
             >
@@ -91,7 +91,7 @@ export function ChatFolderList(props: {
                         event.stopPropagation(); // Prevent the ListItemButton's onClick from firing
                         onFolderSelect(null);
                       }}
-                      selected={selectedFolderId === null}
+                      selected={!activeFolderId}
                       sx={{
                         border: 0,
                         justifyContent: 'space-between',
@@ -114,11 +114,11 @@ export function ChatFolderList(props: {
                     <Draggable key={folder.id} draggableId={folder.id} index={index}>
                       {(provided, snapshot) => (
                         <FolderListItem
+                          activeFolderId={activeFolderId}
                           folder={folder}
+                          onFolderSelect={onFolderSelect}
                           provided={provided}
                           snapshot={snapshot}
-                          onFolderSelect={onFolderSelect}
-                          selectedFolderId={selectedFolderId}
                         />
                       )}
                     </Draggable>
@@ -129,7 +129,7 @@ export function ChatFolderList(props: {
             </StrictModeDroppable>
           </DragDropContext>
         </ListItem>
-      </MenuList>
+      </List>
 
       <AddFolderButton />
     </Sheet>

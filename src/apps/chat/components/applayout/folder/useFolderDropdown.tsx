@@ -3,17 +3,18 @@ import * as React from 'react';
 import FolderIcon from '@mui/icons-material/Folder';
 
 import type { DConversationId } from '~/common/state/store-chats';
-import { DropdownItems, GoodDropdown } from '~/common/components/GoodDropdown';
+import { DropdownItems, PageBarDropdown } from '~/common/layout/optima/components/PageBarDropdown';
 import { useFolderStore } from '~/common/state/store-folders';
 
 
-const SPECIAL_ID_REMOVE = '_REMOVE_';
+export const ClearFolderText = 'Clear Folder';
+const SPECIAL_ID_CLEAR_FOLDER = '_REMOVE_';
 
 
 export function useFolderDropdown(conversationId: DConversationId | null) {
 
   // external state
-  const { folders, useFolders } = useFolderStore();
+  const { folders, enableFolders } = useFolderStore();
 
 
   // Prepare items for the dropdown
@@ -28,8 +29,8 @@ export function useFolderDropdown(conversationId: DConversationId | null) {
     }, {} as DropdownItems);
 
     // add one item representing no folder
-    items[SPECIAL_ID_REMOVE] = {
-      title: 'No Folder',
+    items[SPECIAL_ID_CLEAR_FOLDER] = {
+      title: ClearFolderText,
     };
 
     return items;
@@ -46,7 +47,8 @@ export function useFolderDropdown(conversationId: DConversationId | null) {
         }
       });
       // Add conversation to the selected folder
-      useFolderStore.getState().addConversationToFolder(folderId, conversationId);
+      if (folderId !== SPECIAL_ID_CLEAR_FOLDER)
+        useFolderStore.getState().addConversationToFolder(folderId, conversationId);
     }
   }, [conversationId, folders]);
 
@@ -57,11 +59,11 @@ export function useFolderDropdown(conversationId: DConversationId | null) {
   const folderDropdown = React.useMemo(() => {
 
     // don't show the dropdown if folders are not enabled
-    if (!useFolders)
+    if (!enableFolders)
       return null;
 
     return (
-      <GoodDropdown
+      <PageBarDropdown
         items={folderItems}
         value={currentFolderId}
         onChange={handleFolderChange}
@@ -69,7 +71,7 @@ export function useFolderDropdown(conversationId: DConversationId | null) {
         showSymbols
       />
     );
-  }, [currentFolderId, folderItems, handleFolderChange, useFolders]);
+  }, [currentFolderId, enableFolders, folderItems, handleFolderChange]);
 
   return { folderDropdown };
 }

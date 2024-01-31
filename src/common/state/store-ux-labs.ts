@@ -6,20 +6,14 @@ import { persist } from 'zustand/middleware';
 
 /**
  * Graduated:
- *  - Persona YT Creator: still under a 'true' flag, to disable it if needed
+ *  - see `UxLabsSettings.tsx`, and also:
  *  - Text Tools: dinamically shown where applicable
- *  - Chat Mode: follow-ups; moved to Chat Advanced UI, itemized (Auto-title, Auto-diagram)
+ *  - Chat Mode: follow-ups; moved to Chat Advanced UI
  */
 interface UXLabsStore {
 
-  labsCalling: boolean;
-  setLabsCalling: (labsCalling: boolean) => void;
-
   labsCameraDesktop: boolean;
   setLabsCameraDesktop: (labsCameraDesktop: boolean) => void;
-
-  labsEnhancedUI: boolean;
-  setLabsEnhancedUI: (labsEnhancedUI: boolean) => void;
 
   labsSplitBranching: boolean;
   setLabsSplitBranching: (labsSplitBranching: boolean) => void;
@@ -30,14 +24,8 @@ export const useUXLabsStore = create<UXLabsStore>()(
   persist(
     (set) => ({
 
-      labsCalling: false,
-      setLabsCalling: (labsCalling: boolean) => set({ labsCalling }),
-
       labsCameraDesktop: false,
       setLabsCameraDesktop: (labsCameraDesktop: boolean) => set({ labsCameraDesktop }),
-
-      labsEnhancedUI: false,
-      setLabsEnhancedUI: (labsEnhancedUI: boolean) => set({ labsEnhancedUI }),
 
       labsSplitBranching: false,
       setLabsSplitBranching: (labsSplitBranching: boolean) => set({ labsSplitBranching }),

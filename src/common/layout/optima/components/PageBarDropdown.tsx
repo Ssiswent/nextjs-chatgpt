@@ -16,7 +16,7 @@ export type DropdownItems = Record<string, {
 /**
  * A Select component that blends-in nicely (cleaner, easier to the eyes)
  */
-export function GoodDropdown<TValue extends string>(props: {
+export function PageBarDropdown<TValue extends string>(props: {
   items: DropdownItems,
   prependOption?: React.JSX.Element,
   appendOption?: React.JSX.Element,
@@ -49,7 +49,6 @@ export function GoodDropdown<TValue extends string>(props: {
           // these 3 are copied from JoyMenuList.root - to simulate the same appearance
           '--Icon-fontSize': 'var(--joy-fontSize-xl2)',
           '--ListItem-minHeight': '3rem',
-          '--ListItemDecorator-size': (props.showSymbols && !props.appendOption) ? '2.2rem' : '2.75rem',
           // do not exceed the height of the screen (minus top bar) with any listbox menu
           maxHeight: 'calc(100dvh - 56px)',
           maxWidth: '90dvw',
